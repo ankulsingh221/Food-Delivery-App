@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+}
+
+.l-nav {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;     /* vertical centering */
+    justify-content: center; /* horizontal centering */
+    height: 100%;
+    width: 50%;
+}
+
+.l-nav .brand {
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.green {
+    color: #00b300;
+}
+
+.r-nav {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Style for Deliver to */
+.r-nav .location {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Style for Sign in link */
+.r-nav .auth {
+    text-decoration: none;
+    color: #444;
+    cursor: pointer;
+}
+
+/* Style for Sign up button-like link */
+.r-nav .signup {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
