@@ -1,0 +1,70 @@
+:root {
+  --primary-color: #00b300;
+  --primary-hover: #009900;
+  --bg-color: #ffffff;
+  --bg-gradient: #f9fdfb;
+  --text-color: #000000; /* Dark text for light mode */
+  --subtext-color: #666666;
+  --border-color: #dddddd;
+  --button-bg: #000000;
+  --button-text: #ffffff;
+  --badge-bg: #eaffea;
+  --category-bg: #f1f1f1;
+  --input-bg: #ffffff;
+  --card-bg: #f9f9f9;
+  --placeholder-bg: #eeeeee;
+  --rating-bg: #4caf50;
+  --wishlist-color: #cccccc;
+  --footer-bg: #f9f9f9; /* Light mode footer */
+}
+
+[data-theme="dark"] {
+  --primary-color: #00e600; /* Slightly brighter for dark mode */
+  --primary-hover: #00cc00;
+  --bg-color: #121212;
+  --bg-gradient: #1e1e1e;
+  --text-color: #ffffff; /* Light text for dark mode */
+  --subtext-color: #bbbbbb;
+  --border-color: #333333;
+  --button-bg: #ffffff;
+  --button-text: #000000;
+  --badge-bg: #2a2a2a;
+  --category-bg: #333333;
+  --input-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --placeholder-bg: #2a2a2a;
+  --rating-bg: #66bb6a; /* Slightly adjusted for visibility */
+  --wishlist-color: #888888;
+  --footer-bg: #0a0a0a; /* Dark mode footer (matches image) */
+}
+
+html, body {
+  height: 100%; /* Full height */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color); /* Full screen background */
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+  min-height: 100vh; /* Ensure full viewport coverage */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align content vertically */
+}
+
+/* Ensure emojis render with proper color inheritance */
+button, a, span {
+  color: inherit; /* Helps emojis like 📍 inherit text color */
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%; /* Full width within constraints */
+  flex: 1; /* Grow to fill space */
+}

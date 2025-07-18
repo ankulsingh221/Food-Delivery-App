@@ -2,29 +2,42 @@
   text-align: center;
   padding: 60px 20px;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #fff, #f9fdfb);
+  background: linear-gradient(to bottom, var(--bg-color), var(--bg-gradient));
+  transition: background 0.3s ease; /* Animation for theme switch */
+  animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+  width: 100%; /* Ensure full width */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .badge {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #eaffea;
-  color: #00b300;
+  background-color: var(--badge-bg);
+  color: var(--primary-color);
   border-radius: 20px;
   font-size: 13px;
   margin-bottom: 20px;
+  transition: transform 0.2s ease;
+}
+
+.badge:hover {
+  transform: scale(1.05);
 }
 
 .hero-heading {
   font-size: 48px;
   font-weight: bold;
-  color: #000;
+  color: var(--text-color);
   margin-bottom: 10px;
 }
 
 .subtext {
   font-size: 16px;
-  color: #666;
+  color: var(--subtext-color);
   margin-bottom: 30px;
 }
 
@@ -39,16 +52,29 @@
   padding: 12px 16px;
   width: 300px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: border-color 0.2s ease;
+}
+
+.search-bar input:focus {
+  border-color: var(--primary-color);
 }
 
 .find-btn {
   padding: 12px 20px;
-  background-color: #00b300;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.find-btn:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
 }
 
 .categories {
@@ -62,10 +88,18 @@
 .category {
   padding: 10px 18px;
   border-radius: 20px;
-  background-color: #f1f1f1;
+  background-color: var(--category-bg);
   border: none;
   cursor: pointer;
   font-size: 14px;
+  color: var(--text-color); /* Ensure visibility */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.category:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: scale(1.05);
 }
 
 .stats {
@@ -73,12 +107,14 @@
   justify-content: center;
   gap: 60px;
   font-size: 16px;
-  color: #444;
+  color: var(--subtext-color);
 }
 
 .stat-green {
   font-weight: bold;
   font-size: 20px;
-  color: #00b300;
+  color: var(--primary-color);
   display: block;
 }
+
+/* Responsiveness

@@ -1,84 +1,122 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .nav {
-    height: 60px;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    border-bottom: 1px solid #ddd;
-    font-family: Arial, sans-serif;
+  height: 60px;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--border-color);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease; /* Animation for theme switch */
 }
 
 .l-nav {
-    margin: 20px 0;
-    display: flex;
-    align-items: center;     /* vertical centering */
-    justify-content: center; /* horizontal centering */
-    height: 100%;
-    width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 .l-nav .brand {
-    font-size: 22px;
-    font-weight: bold;
-    color: black;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 .green {
-    color: #00b300;
+  color: var(--primary-color);
 }
 
 .r-nav {
-    height: 100%;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-size: 14px;
-    color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--text-color);
 }
 
-/* Style for Deliver to */
 .r-nav .location {
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--text-color); /* Explicitly set color for visibility in both modes */
+  transition: color 0.2s ease, transform 0.2s ease; /* Animation */
 }
 
-/* Style for Sign in link */
+.r-nav .location:hover {
+  color: var(--primary-color); /* Highlight on hover for better UX */
+  transform: scale(1.05);
+}
+
 .r-nav .auth {
-    text-decoration: none;
-    color: #444;
-    cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-/* Style for Sign up button-like link */
+.r-nav .auth:hover {
+  color: var(--primary-color);
+}
+
 .r-nav .signup {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 18px;
-    font-size: 14px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Animation */
+}
+
+.r-nav .signup:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 20px;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .l-nav, .r-nav {
+    width: 100%;
     justify-content: center;
-    cursor: pointer;
+    padding: 10px 0;
+  }
+
+  .r-nav {
+    gap: 10px;
+  }
 }

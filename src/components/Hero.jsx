@@ -1,3 +1,4 @@
+// Hero.jsx (no changes needed)
 import React from 'react';
 import '../styles/Hero.css';
 

@@ -1,0 +1,212 @@
+.restaurants-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: background-color 0.3s ease;
+  animation: fadeIn 1s ease-in-out;
+  width: 100%; /* Ensure full width alignment */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.subheader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--subtext-color);
+}
+
+.icon {
+  color: var(--text-color);
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.new-button {
+  background-color: var(--badge-bg);
+  border: none;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  color: var(--text-color); /* Ensure visibility */
+  transition: transform 0.2s ease;
+}
+
+.new-button:hover {
+  transform: scale(1.05);
+}
+
+.discover {
+  font-size: 14px;
+  color: var(--subtext-color);
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-button {
+  background-color: var(--category-bg);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  color: var(--text-color);
+}
+
+.filter-button.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.filter-button:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  max-width: 300px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-placeholder {
+  height: 150px;
+  background-color: var(--placeholder-bg);
+  margin-bottom: 10px;
+}
+
+.info h3 {
+  font-size: 18px;
+  margin: 0 0 5px;
+  color: var(--text-color);
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: var(--subtext-color);
+}
+
+.rating {
+  background-color: var(--rating-bg);
+  color: #fff;
+  border-radius: 20px;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+.rating span {
+  margin: 0 1px;
+  color: #ffeb3b; /* Yellow stars, consistent in dark mode */
+}
+
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: var(--wishlist-color);
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth animation for toggle */
+}
+
+.wishlist-icon:hover {
+  color: #f00;
+  transform: scale(1.2);
+}
+
+.wishlist-icon.wishlisted {
+  color: #f00;
+  animation: heartbeat 0.5s ease; /* Pulse animation on toggle */
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.view-all {
+  display: block;
+  margin: 20px auto 0;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  color: var(--text-color);
+}
+
+.view-all:hover {
+  background-color: var(--category-bg);
+  transform: scale(1.05);
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-link {
+    max-width: none;
+  }
+}
