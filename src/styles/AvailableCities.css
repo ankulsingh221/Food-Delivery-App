@@ -1,0 +1,120 @@
+/* src/styles/AvailableCities.css (Enhanced with more animations) */
+/* Self-contained styles to avoid affecting existing CSS */
+.available-cities-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  background-color: var(--bg-gradient); /* Reuse existing var if available */
+  border-radius: 8px;
+  animation: fadeIn 1s ease-in-out; /* Fade-in for container */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.available-cities-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  animation: slideDown 0.8s ease-out; /* Slide down animation */
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.available-cities-subtitle {
+  font-size: 16px;
+  color: var(--subtext-color);
+  margin-bottom: 20px;
+  animation: fadeIn 1.2s ease-in-out 0.3s; /* Delayed fade-in */
+}
+
+.available-cities-map {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 20px;
+  background-color: #eaffea; /* Light green background for map */
+  border-radius: 8px;
+  overflow: hidden;
+  animation: zoomIn 1s ease-in-out; /* Zoom-in animation for map */
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.map-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out; /* Pulse animation for dots */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(0, 179, 0, 0.7); }
+  50% { transform: scale(1.5); opacity: 0.7; box-shadow: 0 0 0 10px rgba(0, 179, 0, 0); }
+  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(0, 179, 0, 0); }
+}
+
+.map-instruction {
+  font-size: 14px;
+  color: var(--subtext-color);
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-in-out 0.6s; /* Delayed fade-in */
+}
+
+.available-cities-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  animation: slideUp 1s ease-out 1s; /* Slide up animation for list */
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.city-button {
+  padding: 8px 16px;
+  background-color: var(--category-bg);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  animation: bounceIn 0.5s ease-out; /* Bounce-in for each button */
+}
+
+.city-button:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.1) rotate(2deg); /* Enhanced hover: scale and slight rotate */
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Stagger button animations */
+.available-cities-list .city-button:nth-child(1) { animation-delay: 0.1s; }
+.available-cities-list .city-button:nth-child(2) { animation-delay: 0.2s; }
+.available-cities-list .city-button:nth-child(3) { animation-delay: 0.3s; }
+.available-cities-list .city-button:nth-child(4) { animation-delay: 0.4s; }
+.available-cities-list .city-button:nth-child(5) { animation-delay: 0.5s; }
+.available-cities-list .city-button:nth-child(6) { animation-delay: 0.6s; }
+.available-cities-list .city-button:nth-child(7) { animation-delay: 0.7s; }

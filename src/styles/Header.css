@@ -24,6 +24,11 @@
   height: 100%;
 }
 
+.brand-link {
+  text-decoration: none; /* No underline */
+  cursor: pointer; /* Hand cursor on hover */
+}
+
 .l-nav .brand {
   font-size: 22px;
   font-weight: bold;
@@ -119,4 +124,66 @@
   .r-nav {
     gap: 10px;
   }
+}
+/* Location Dropdown Styles */
+.location-wrapper {
+  position: relative;
+}
+
+.location-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.location-dropdown button {
+  padding: 8px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.location-dropdown button:hover {
+  background-color: var(--primary-hover);
+}
+
+.manual-input {
+  display: flex;
+  gap: 5px;
+}
+
+.manual-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.manual-input button {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.manual-input button:hover {
+  background-color: var(--primary-hover);
 }
