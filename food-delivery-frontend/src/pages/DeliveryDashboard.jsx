@@ -344,6 +344,38 @@ export default function DeliveryDashboard() {
               </div>
             )}
 
+            {activeTab === "earnings" && (
+              <div className="card p-6 space-y-6 animate-fadeInScale">
+                <h2 className="text-3xl font-extrabold mb-6 text-orange-600">Earnings Details</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg font-semibold">
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Total Earnings</p>
+                    <p className="text-orange-600 text-2xl font-bold">₹{(deliveries.reduce((acc, d) => (d.status === "delivered" ? acc + d.amount : acc), 0) * USD_TO_INR).toFixed(2)}</p>
+                  </div>
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Total Orders</p>
+                    <p className="text-orange-600 text-2xl font-bold">{deliveries.length}</p>
+                  </div>
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Delivered</p>
+                    <p className="text-orange-600 text-2xl font-bold">{deliveries.filter(d => d.status === "delivered").length}</p>
+                  </div>
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Income</p>
+                    <p className="text-orange-600 text-2xl font-bold">₹{(deliveries.reduce((acc, d) => (d.status === "delivered" ? acc + d.amount : acc), 0) * USD_TO_INR).toFixed(2)}</p>
+                  </div>
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Profit</p>
+                    <p className="text-orange-600 text-2xl font-bold">₹{((deliveries.reduce((acc, d) => (d.status === "delivered" ? acc + d.amount : acc), 0) * USD_TO_INR) * 0.2).toFixed(2)}</p>
+                  </div>
+                  <div className="p-4 bg-orange-50 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <p className="text-gray-700">Real Income</p>
+                    <p className="text-orange-600 text-2xl font-bold">₹{(deliveries.reduce((acc, d) => (d.status === "delivered" ? acc + d.amount : acc), 0) * USD_TO_INR).toFixed(2)}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeTab === "profile" && (
               <div className="card">
                 <h2 className="text-2xl font-bold mb-6">Profile</h2>
