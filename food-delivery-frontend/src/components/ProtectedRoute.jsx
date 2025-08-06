@@ -14,10 +14,12 @@ export default function ProtectedRoute({ children, role }) {
     )
   }
 
+  // Not logged in → redirect to homepage or login
   if (!user) {
     return <Navigate to="/" replace />
   }
 
+  // Role mismatch → redirect to homepage
   if (role && user.role !== role) {
     return <Navigate to="/" replace />
   }

@@ -136,6 +136,10 @@ public class User implements UserDetails{
 		return true;
 	}
 
+	public RoleType getRoleType() {
+	    return role;
+	}
+
 	
 	
 }

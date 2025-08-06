@@ -23,8 +23,12 @@ export default function AppContent() {
     return <LandingPage />
   }
 
+  // --- THE FIX ---
+  // Get the role and convert to lowercase for a reliable check
+  const userRole = user.role ? user.role.toLowerCase() : '';
+
   // Role-based dashboard rendering
-  switch (user.role) {
+  switch (userRole) {
     case "customer":
       return <CustomerDashboard />
     case "restaurant":
@@ -34,6 +38,8 @@ export default function AppContent() {
     case "admin":
       return <AdminDashboard />
     default:
-      return <CustomerDashboard />
+      // It's better to redirect to login or show an error for unknown roles
+      console.error("Unknown or missing user role:", user.role);
+      return <LandingPage /> // Or a dedicated error page
   }
 }

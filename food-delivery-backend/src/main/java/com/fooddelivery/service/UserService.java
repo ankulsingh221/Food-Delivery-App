@@ -37,6 +37,10 @@ public class UserService implements UserDetailsService{
             Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()))
         );
     }
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
 
     public User registerUser(User user) {
     	PasswordEncoder encoder = applicationContext.getBean(PasswordEncoder.class);

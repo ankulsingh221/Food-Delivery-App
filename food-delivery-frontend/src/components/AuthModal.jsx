@@ -5,50 +5,400 @@ import { X, Mail, Lock, User, Eye, EyeOff } from "lucide-react"
 import { useAuth } from "../contexts/AuthContext"
 
 export default function AuthModal({ isOpen, onClose, mode, onSwitchMode }) {
-  const { login, register } = useAuth()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
     role: "customer",
+    // ... other fields remain the same
+    businessName: "",
+    gstin: "",
+    fssaiNumber: "",
+    address: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    openingHours: "",
+    closingHours: "",
+    vehicleType: "",
+    licenseNumber: "",
+    idProofUrl: "",
+    zone: "",
+    label: "",
+    street: "",
+    country: "",
+    isDefault: false,
   })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
+
+  // This generic API helper remains the same
+  const apiPost = async (url, body, token = null) => {
+    const headers = { "Content-Type": "application/json" };
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Request failed with status ${response.status}`)
+    }
+
+    const contentType = response.headers.get("content-type")
+    if (contentType && contentType.includes("application/json")) {
+      return response.json()
+    }
+    return null
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setErrors({})
 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+    if (!API_BASE_URL) {
+      console.error("VITE_API_BASE_URL is not defined.");
+      setErrors({ general: "Client-side configuration error." });
+      setIsLoading(false);
+      return;
+    }
+
     try {
       if (mode === "signin") {
-        await login(formData.email, formData.password, formData.role)
+        // Sign-in logic is the same for all roles, including admin
+        await login(formData.email, formData.password);
+        onClose();
       } else {
+        // --- PUBLIC SIGN UP LOGIC ---
         if (formData.password !== formData.confirmPassword) {
-          setErrors({ confirmPassword: "Passwords don't match" })
-          return
+          setErrors({ confirmPassword: "Passwords don't match" });
+          setIsLoading(false);
+          return;
         }
-        await register(formData)
+
+        // The 'admin' role case is removed to prevent public admin creation
+        if (formData.role === 'admin') {
+            setErrors({ general: "Admin registration is not allowed from this form." });
+            setIsLoading(false);
+            return;
+        }
+
+        const { role, name, email, password } = formData;
+        let registrationResponse;
+        let payload;
+
+        switch (role) {
+          case "restaurant":
+            payload = {
+              name, email, password,
+              businessName: formData.businessName, gstin: formData.gstin, fssaiNumber: formData.fssaiNumber,
+              address: formData.address, city: formData.city, state: formData.state, postalCode: formData.postalCode,
+              openingHours: formData.openingHours, closingHours: formData.closingHours,
+            };
+            registrationResponse = await apiPost(`${API_BASE_URL}/api/auth/register/restaurant`, payload);
+            break;
+
+          case "delivery":
+            payload = {
+              name, email, password,
+              vehicleType: formData.vehicleType, licenseNumber: formData.licenseNumber,
+              idProofUrl: formData.idProofUrl, zone: formData.zone,
+            };
+            registrationResponse = await apiPost(`${API_BASE_URL}/api/auth/register/delivery`, payload);
+            break;
+
+          case "customer":
+          default:
+            payload = { name, email, password, roleType: 'CUSTOMER' };
+            registrationResponse = await apiPost(`${API_BASE_URL}/api/auth/register`, payload);
+            break;
+        }
+        
+        alert("Registration successful! Please sign in.");
+        onSwitchMode();
       }
-      onClose()
-      setFormData({ name: "", email: "", password: "", confirmPassword: "", role: "customer" })
     } catch (error) {
-      setErrors({ general: "Authentication failed" })
+      setErrors({ general: error.message || "An unknown error occurred." });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+}
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: "" })
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }))
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
     }
   }
 
   if (!isOpen) return null
+
+  // --- All the render functions below remain unchanged ---
+
+  const renderRestaurantFields = () => (
+    <>
+      <hr className="my-4" />
+      <h3 className="text-lg font-semibold mb-2">Restaurant Details</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Business Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Business Name</label>
+          <input
+            type="text"
+            name="businessName"
+            value={formData.businessName}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Your restaurant's name"
+            required
+          />
+        </div>
+        {/* GSTIN */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">GSTIN</label>
+          <input
+            type="text"
+            name="gstin"
+            value={formData.gstin}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Your GSTIN"
+            required
+          />
+        </div>
+        {/* FSSAI Number */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">FSSAI Number</label>
+          <input
+            type="text"
+            name="fssaiNumber"
+            value={formData.fssaiNumber}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Your FSSAI number"
+            required
+          />
+        </div>
+        {/* Address */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Restaurant address"
+            required
+          />
+        </div>
+        {/* City */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+          <input type="text" name="city" value={formData.city} onChange={handleChange} className="input-field" placeholder="City" required />
+        </div>
+        {/* State */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+          <input
+            type="text"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="State"
+            required
+          />
+        </div>
+        {/* Postal Code */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+          <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Postal code"
+            required
+          />
+        </div>
+        {/* Opening Hours */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Opening Hours</label>
+          <input
+            type="time"
+            name="openingHours"
+            value={formData.openingHours}
+            onChange={handleChange}
+            className="input-field"
+            required
+          />
+        </div>
+        {/* Closing Hours */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Closing Hours</label>
+          <input
+            type="time"
+            name="closingHours"
+            value={formData.closingHours}
+            onChange={handleChange}
+            className="input-field"
+            required
+          />
+        </div>
+      </div>
+    </>
+  )
+
+  const renderDeliveryFields = () => (
+    <>
+      <hr className="my-4" />
+      <h3 className="text-lg font-semibold mb-2">Delivery Partner Details</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Vehicle Type */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Vehicle Type</label>
+          <input
+            type="text"
+            name="vehicleType"
+            value={formData.vehicleType}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="e.g., Bike, Scooter"
+            required
+          />
+        </div>
+        {/* License Number */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">License Number</label>
+          <input
+            type="text"
+            name="licenseNumber"
+            value={formData.licenseNumber}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Your driver's license number"
+            required
+          />
+        </div>
+        {/* ID Proof URL */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">ID Proof URL</label>
+          <input
+            type="url"
+            name="idProofUrl"
+            value={formData.idProofUrl}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Link to your ID proof"
+            required
+          />
+        </div>
+        {/* Zone */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Zone</label>
+          <input
+            type="text"
+            name="zone"
+            value={formData.zone}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Your delivery zone"
+            required
+          />
+        </div>
+      </div>
+    </>
+  )
+
+  const renderAddressFields = () => (
+    <>
+      <hr className="my-4" />
+      <h3 className="text-lg font-semibold mb-2">Address Details (Optional)</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Label */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Label</label>
+          <input
+            type="text"
+            name="label"
+            value={formData.label}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="e.g., Home, Work"
+          />
+        </div>
+        {/* Street */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Street</label>
+          <input type="text" name="street" value={formData.street} onChange={handleChange} className="input-field" placeholder="Street" />
+        </div>
+        {/* City */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+          <input type="text" name="city" value={formData.city} onChange={handleChange} className="input-field" placeholder="City" />
+        </div>
+        {/* State */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+          <input type="text" name="state" value={formData.state} onChange={handleChange} className="input-field" placeholder="State" />
+        </div>
+        {/* Postal Code */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+          <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Postal code"
+          />
+        </div>
+        {/* Country */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Country</label>
+          <input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Country"
+          />
+        </div>
+        {/* Default Address */}
+        <div className="md:col-span-2 flex items-center">
+          <input
+            type="checkbox"
+            name="isDefault"
+            checked={formData.isDefault}
+            onChange={handleChange}
+            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+          />
+          <label htmlFor="isDefault" className="ml-2 block text-sm text-gray-900">
+            Set as default address
+          </label>
+        </div>
+      </div>
+    </>
+  )
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -69,7 +419,6 @@ export default function AuthModal({ isOpen, onClose, mode, onSwitchMode }) {
               <option value="customer">Customer</option>
               <option value="restaurant">Restaurant Owner</option>
               <option value="delivery">Delivery Partner</option>
-              <option value="admin">Administrator</option>
             </select>
           </div>
 
@@ -159,6 +508,11 @@ export default function AuthModal({ isOpen, onClose, mode, onSwitchMode }) {
                 {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
               </div>
             )}
+
+            {/* Conditional Fields */}
+            {mode === "signup" && formData.role === "restaurant" && renderRestaurantFields()}
+            {mode === "signup" && formData.role === "delivery" && renderDeliveryFields()}
+            {mode === "signup" && formData.role === "customer" && renderAddressFields()}
 
             <button
               type="submit"
